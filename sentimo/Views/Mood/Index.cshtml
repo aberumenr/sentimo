@@ -1,0 +1,162 @@
+﻿@model sentimo.Models.MoodFilterViewModel
+@{
+    Layout = null;  // full-page custom layout (no shared _Layout)
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>sentimo · a song for your mood</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Your main CSS -->
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="sentimo-hero-body">
+    <div class="sentimo-hero-overlay">
+        <div class="sentimo-hero-content">
+
+            <header class="sentimo-hero-header">
+                <div class="sentimo-hero-logo">sentimo</div>
+                <div class="sentimo-hero-tagline">a song for your mood</div>
+            </header>
+
+            <main class="sentimo-hero-main">
+                <form asp-action="Index" method="get" class="sentimo-hero-form">
+
+                    <div class="sentimo-question">
+                        How are you feeling today?
+                    </div>
+
+                    @* EMOTION BAR *@
+                    <div class="sentimo-emotion-bar">
+                        @{
+                            string selectedEmotion = Model.Emotion ?? "";
+                        }
+
+                        <button type="submit" name="emotion" value="joy"
+                                class="sentimo-emotion-pill @(selectedEmotion == "joy" ? "active" : "")">
+                            <span class="emoji">😊</span>
+                            <span>Happy</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="sadness"
+                                class="sentimo-emotion-pill @(selectedEmotion == "sadness" ? "active" : "")">
+                            <span class="emoji">😢</span>
+                            <span>Sad</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="anger"
+                                class="sentimo-emotion-pill @(selectedEmotion == "anger" ? "active" : "")">
+                            <span class="emoji">😡</span>
+                            <span>Angry</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="fear"
+                                class="sentimo-emotion-pill @(selectedEmotion == "fear" ? "active" : "")">
+                            <span class="emoji">😨</span>
+                            <span>Afraid</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="anticipation"
+                                class="sentimo-emotion-pill @(selectedEmotion == "anticipation" ? "active" : "")">
+                            <span class="emoji">🤔</span>
+                            <span>Expectant</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="surprise"
+                                class="sentimo-emotion-pill @(selectedEmotion == "surprise" ? "active" : "")">
+                            <span class="emoji">😲</span>
+                            <span>Surprised</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="disgust"
+                                class="sentimo-emotion-pill @(selectedEmotion == "disgust" ? "active" : "")">
+                            <span class="emoji">🤢</span>
+                            <span>Put off</span>
+                        </button>
+
+                        <button type="submit" name="emotion" value="trust"
+                                class="sentimo-emotion-pill @(selectedEmotion == "trust" ? "active" : "")">
+                            <span class="emoji">🤝</span>
+                            <span>Trusting</span>
+                        </button>
+                    </div>
+
+                    <div class="sentimo-question second">
+                        Fav. decade?
+                    </div>
+
+                    @* DECADE DROPDOWN BUBBLE *@
+                    <div class="sentimo-decade-wrapper">
+                        @{
+                            string selectedDecade = Model.Decade ?? "";
+                            string[] decades = new[] { "1950s", "1960s", "1970s", "1980s", "1990s", "2000s", "2010s" };
+                        }
+
+                        <select name="decade" class="sentimo-decade-select">
+                            @* "Any" option *@
+                            @if (string.IsNullOrEmpty(selectedDecade))
+                            {
+                                <option value="" selected>Any</option>
+                            }
+                            else
+                            {
+                                <option value="">Any</option>
+                            }
+
+                            @* Decade options *@
+                            @foreach (var d in decades)
+                            {
+                                if (selectedDecade == d)
+                                {
+                                    <option value="@d" selected>@d</option>
+                                }
+                                else
+                                {
+                                    <option value="@d">@d</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                </form>
+
+                @* RESULTS *@
+                @if (!string.IsNullOrEmpty(Model.Emotion) && Model.Results.Any())
+                {
+                    <section class="sentimo-results-hero">
+                        <div class="sentimo-results-title">
+                            Songs that match your mood
+                        </div>
+
+                        <ul class="sentimo-results-list">
+                            @foreach (var s in Model.Results)
+                            {
+                                <li class="sentimo-result-item">
+                                    <div class="song">@s.Song</div>
+                                    <div class="meta">
+                                        @s.Artist · @s.Year (@s.Decade) ·
+                                        @s.DominantEmotion · @s.PolarityMean.ToString("0.00")
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                }
+                else if (!string.IsNullOrEmpty(Model.Emotion) && !Model.Results.Any())
+                {
+                    <section class="sentimo-results-hero">
+                        <div class="sentimo-results-title">
+                            No songs found with those filters 🥺
+                        </div>
+                    </section>
+                }
+            </main>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+/* ---------- BASE ---------- */
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* ---------- HERO BACKGROUND ---------- */
+
+.sentimo-hero-body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f6edc, #5a21c9); /* blue ? violet */
+    font-family: 'Quicksand', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #ffffff;
+}
+
+.sentimo-hero-overlay {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sentimo-hero-content {
+    width: 100%;
+    max-width: 900px;
+    padding: 2.8rem 1.5rem 3.2rem;
+}
+
+/* ---------- HEADER: LOGO + TAGLINE ---------- */
+
+.sentimo-hero-header {
+    text-align: center;
+    margin-bottom: 2.8rem;
+}
+
+.sentimo-hero-logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3.4rem; /* bigger title */
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.sentimo-hero-tagline {
+    font-size: 1.2rem; /* bigger slogan */
+    opacity: 0.9;
+}
+
+/* ---------- MAIN LAYOUT ---------- */
+
+.sentimo-hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.sentimo-hero-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.sentimo-question {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+    .sentimo-question.second {
+        margin-top: 0.2rem;
+    }
+
+/* ---------- EMOTION BAR (ONE ROW) ---------- */
+
+.sentimo-emotion-bar {
+    background: rgba(0, 0, 0, 0.24);
+    border-radius: 999px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-wrap: nowrap; /* keep in one row */
+    justify-content: center;
+    gap: 0.4rem; /* smaller gap so they fit */
+    overflow-x: auto; /* scroll gently if too narrow */
+}
+
+.sentimo-emotion-pill {
+    border-radius: 999px;
+    border: none;
+    padding: 0.3rem 0.85rem; /* a bit tighter to fit 8 pills */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(15, 45, 120, 0.9);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, transform 0.12s ease;
+}
+
+    .sentimo-emotion-pill .emoji {
+        font-size: 1.1rem;
+    }
+
+    .sentimo-emotion-pill:hover {
+        transform: translateY(-2px);
+    }
+
+    .sentimo-emotion-pill.active {
+        background: #f7b1c3; /* blush pink */
+        color: #1b1230;
+    }
+
+/* ---------- DECADE DROPDOWN BUBBLE ---------- */
+
+.sentimo-decade-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.sentimo-decade-select {
+    border-radius: 999px;
+    border: none;
+    padding: 0.4rem 1.4rem;
+    font-size: 0.95rem;
+    background: rgba(7, 31, 90, 0.9);
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+    /* optional: add a subtle outline when focused */
+    .sentimo-decade-select:focus {
+        outline: 2px solid #a7c6ea;
+    }
+
+/* ---------- RESULTS SECTION ---------- */
+
+.sentimo-results-hero {
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 24px;
+    padding: 1.2rem 1.4rem;
+}
+
+.sentimo-results-title {
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+}
+
+.sentimo-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sentimo-result-item {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+    padding: 0.6rem 0.8rem;
+}
+
+    .sentimo-result-item .song {
+        font-weight: 600;
+    }
+
+    .sentimo-result-item .meta {
+        font-size: 0.8rem;
+        opacity: 0.85;
+    }
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 700px) {
+    .sentimo-hero-content {
+        padding: 2.2rem 1.1rem 2.4rem;
+    }
+
+    .sentimo-hero-logo {
+        font-size: 2.6rem;
+    }
+
+    .sentimo-emotion-bar {
+        border-radius: 32px;
+    }
+}
