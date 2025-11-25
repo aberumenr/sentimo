@@ -10,7 +10,7 @@
     <title>sentimo · a song for your mood</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;500;600&display=swap" />
 
     <!-- Your main CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
@@ -25,16 +25,19 @@
             </header>
 
             <main class="sentimo-hero-main">
+
+                @* ---------- FORM 1: EMOTION SELECTION ---------- *@
                 <form asp-action="Index" method="get" class="sentimo-hero-form">
+                    @* keep current decade when changing emotion *@
+                    <input type="hidden" name="decade" value="@Model.Decade" />
 
                     <div class="sentimo-question">
                         How are you feeling today?
                     </div>
 
-                    @* EMOTION BAR *@
                     <div class="sentimo-emotion-bar">
                         @{
-                            string selectedEmotion = Model.Emotion ?? "";
+                            var selectedEmotion = Model.Emotion ?? "";
                         }
 
                         <button type="submit" name="emotion" value="joy"
@@ -85,20 +88,28 @@
                             <span>Trusting</span>
                         </button>
                     </div>
+                </form>
 
-                    <div class="sentimo-question second">
-                        Fav. decade?
-                    </div>
+                @* ---------- FORM 2: DECADE FILTER ---------- *@
+                <div class="sentimo-question second">
+                    Fav. decade?
+                </div>
 
-                    @* DECADE DROPDOWN BUBBLE *@
+                <form asp-action="Index" method="get" class="sentimo-decade-form">
+                    @* keep current emotion when changing decade *@
+                    <input type="hidden" name="emotion" value="@Model.Emotion" />
+
                     <div class="sentimo-decade-wrapper">
                         @{
                             string selectedDecade = Model.Decade ?? "";
                             string[] decades = new[] { "1950s", "1960s", "1970s", "1980s", "1990s", "2000s", "2010s" };
                         }
 
-                        <select name="decade" class="sentimo-decade-select">
-                            @* "Any" option *@
+                        <select name="decade"
+                                id="decade-select"
+                                class="sentimo-decade-select"
+                                onchange="this.form.submit()">
+                            @* Any *@
                             @if (string.IsNullOrEmpty(selectedDecade))
                             {
                                 <option value="" selected>Any</option>
@@ -108,7 +119,6 @@
                                 <option value="">Any</option>
                             }
 
-                            @* Decade options *@
                             @foreach (var d in decades)
                             {
                                 if (selectedDecade == d)
@@ -122,10 +132,9 @@
                             }
                         </select>
                     </div>
-
                 </form>
 
-                @* RESULTS *@
+                @* ---------- RESULTS ---------- *@
                 @if (!string.IsNullOrEmpty(Model.Emotion) && Model.Results.Any())
                 {
                     <section class="sentimo-results-hero">
@@ -155,6 +164,7 @@
                         </div>
                     </section>
                 }
+
             </main>
         </div>
     </div>
